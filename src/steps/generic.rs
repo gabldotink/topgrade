@@ -91,7 +91,7 @@ pub fn run_cargo_update(ctx: &ExecutionContext) -> Result<()> {
             .ok()
             .or_else(|| cargo_dir.join("bin/cargo-cache").if_exists());
         if let Some(e) = cargo_cache {
-            ctx.execute(e).args(["-a"]).status_checked()?;
+            ctx.execute(e).args(["--autoclean"]).status_checked()?;
         } else {
             let message = String::from(
                 "cargo-cache isn't installed so Topgrade can't cleanup cargo packages.\nInstall cargo-cache by running `cargo install cargo-cache`",

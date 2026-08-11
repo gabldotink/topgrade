@@ -156,8 +156,7 @@ pub fn run_zim(ctx: &ExecutionContext) -> Result<()> {
         .or_else(|_| {
             ctx.execute("zsh")
                 .always()
-                // TODO: Should these be quoted?
-                .args(["-c", "[[ -n ${ZIM_HOME} ]] && print -n ${ZIM_HOME}"])
+                .args(["-c", "[[ -d \"$ZIM_HOME\" ]] && print -n \"$ZIM_HOME\""])
                 .output_checked_utf8()
                 .map(|o| o.stdout)
         })
@@ -210,8 +209,7 @@ pub fn run_oh_my_zsh(ctx: &ExecutionContext) -> Result<()> {
         .or_else(|_| {
             ctx.execute("zsh")
                 .always()
-                // TODO: Should these be quoted?
-                .args(["-c", "test $ZSH_CUSTOM && echo -n $ZSH_CUSTOM"])
+                .args(["-c", "[[ -d \"$ZSH_CUSTOM\" ]] && print -n \"$ZSH_CUSTOM\""])
                 .output_checked_utf8()
                 .map(|o| o.stdout)
         })
